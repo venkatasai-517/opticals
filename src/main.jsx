@@ -13,13 +13,15 @@ import HomePage from "./Pages/HomePage.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      {/* all routes goes inside */}
-      <Route index={true} path="/" element={<HomePage />} />
-      {/* <Route path="#services" element={<Services />} />
+      {/* Only keep one index route */}
+      <Route index element={<HomePage />} />
+      {/* Uncomment and add other routes here */}
+      {/* 
+      <Route path="#services" element={<Services />} />
       <Route path="/courses" element={<Courses />} />
       <Route path="/aboutus" element={<AboutUs />} />
-      <Route path="/contact" element={<Contact />} /> */}
-      <Route index element={<HomePage />} />
+      <Route path="/contact" element={<Contact />} /> 
+      */}
     </Route>
   )
 );
