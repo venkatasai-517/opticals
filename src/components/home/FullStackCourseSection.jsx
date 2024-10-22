@@ -1,78 +1,116 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 // Contact Form Modal Component
 const ContactFormModal = ({ isOpen, onClose }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Form submitted!");
-    onClose(); // Close modal after submission
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+
+    formData.append("access_key", "dc72e27f-92ec-4ed0-a3a5-57fd61f0a352");
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+    setIsModalOpen(false); // Close the modal after submission
+
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: json,
+    }).then((res) => res.json());
+
+    if (res.success) {
+      Swal.fire({
+        title: "Good job!",
+        text: "We Will Contact You Soon!",
+        icon: "success",
+      });
+    }
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
         <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={onSubmit}>
           <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label className="block text-sm font-medium mb-2" htmlFor="name">
               Name
             </label>
             <input
               type="text"
               id="name"
               name="name"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+              className="w-full border rounded-md p-2"
               required
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label className="block text-sm font-medium mb-2" htmlFor="email">
               Email
             </label>
             <input
               type="email"
               id="email"
               name="email"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+              className="w-full border rounded-md p-2"
               required
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="message"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label className="block text-sm font-medium mb-2" htmlFor="number">
+              Mobile Number
+            </label>
+            <input
+              type="text"
+              id="number"
+              name="number"
+              className="w-full border rounded-md p-2"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2" htmlFor="clgname">
+              School/Collage Name
+            </label>
+            <input
+              type="text"
+              id="clgname"
+              name="clgname"
+              className="w-full border rounded-md p-2"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2" htmlFor="message">
               Message
             </label>
             <textarea
               id="message"
               name="message"
+              className="w-full border rounded-md p-2"
               rows="4"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
-              required
             ></textarea>
           </div>
           <div className="flex justify-end">
             <button
-              type="button"
-              className="px-4 py-2 bg-gray-300 rounded-md mr-2"
-              onClick={onClose}
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
             >
-              Cancel
+              Send Message
             </button>
             <button
-              type="submit"
-              className="px-4 py-2 bg-green-600 text-white rounded-md"
+              type="button"
+              className="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition duration-300"
+              onClick={() => setIsModalOpen(false)} // Close modal
             >
-              Submit
+              Cancel
             </button>
           </div>
         </form>

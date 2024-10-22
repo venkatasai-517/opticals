@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaStar } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 // Mock data for reviews
 const reviews = [
@@ -62,7 +63,7 @@ const ReviewCard = ({ name, date, stars, comment, image, onContactClick }) => {
           className="object-cover w-36 h-36 rounded-full"
         />
       ) : (
-        <div className="flex items-center justify-center w-36 h-36 text-2xl font-bold text-white  bg-violet-500 rounded-full">
+        <div className="flex items-center justify-center w-36 h-36 text-2xl font-bold text-white bg-violet-500 rounded-full">
           {getAvatar(name)}
         </div>
       )}
@@ -75,7 +76,7 @@ const ReviewCard = ({ name, date, stars, comment, image, onContactClick }) => {
         </div>
 
         {/* Stars */}
-        <div className="flex items-center  mb-3">{renderStars(stars)}</div>
+        <div className="flex items-center mb-3">{renderStars(stars)}</div>
 
         {/* Comment */}
         <div className="text-base text-gray-800">{comment}</div>
@@ -98,75 +99,111 @@ const ReviewCard = ({ name, date, stars, comment, image, onContactClick }) => {
 const ContactFormModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Form submitted!");
-    onClose(); // Close modal after submission
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+
+    formData.append("access_key", "dc72e27f-92ec-4ed0-a3a5-57fd61f0a352");
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: json,
+    }).then((res) => res.json());
+
+    if (res.success) {
+      Swal.fire({
+        title: "Good job!",
+        text: "We Will Contact You Soon!",
+        icon: "success",
+      });
+    }
+
+    onClose(); // Close the modal after submission
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
         <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={onSubmit}>
           <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label className="block text-sm font-medium mb-2" htmlFor="name">
               Name
             </label>
             <input
               type="text"
               id="name"
               name="name"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+              className="w-full border rounded-md p-2"
               required
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label className="block text-sm font-medium mb-2" htmlFor="email">
               Email
             </label>
             <input
               type="email"
               id="email"
               name="email"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+              className="w-full border rounded-md p-2"
               required
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="message"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label className="block text-sm font-medium mb-2" htmlFor="number">
+              Mobile Number
+            </label>
+            <input
+              type="text"
+              id="number"
+              name="number"
+              className="w-full border rounded-md p-2"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2" htmlFor="clgname">
+              School/College Name
+            </label>
+            <input
+              type="text"
+              id="clgname"
+              name="clgname"
+              className="w-full border rounded-md p-2"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2" htmlFor="message">
               Message
             </label>
             <textarea
               id="message"
               name="message"
+              className="w-full border rounded-md p-2"
               rows="4"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
-              required
             ></textarea>
           </div>
           <div className="flex justify-end">
             <button
-              type="button"
-              className="px-4 py-2 bg-gray-300 rounded-md mr-2"
-              onClick={onClose}
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
             >
-              Cancel
+              Send Message
             </button>
             <button
-              type="submit"
-              className="px-4 py-2 bg-violet-700 text-white rounded-md"
+              type="button"
+              className="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition duration-300"
+              onClick={onClose} // Close modal
             >
-              Submit
+              Cancel
             </button>
           </div>
         </form>

@@ -5,22 +5,24 @@ import Swal from "sweetalert2";
 // Carousel content data
 const carouselContent = [
   {
-    image: "/images/1.webp",
+    image: "/images/1.png",
+    mobileImage: "/images/banner4.png", // Add mobile-specific image
     heading: "Mr.Optics",
     content: "Your One-Stop Destination for All Your Vision Needs.",
   },
   {
-    image: "/images/2.webp",
+    image: "/images/2.png",
+    mobileImage: "/images/banner5.png", // Add mobile-specific image
     heading: "Mr.Optics",
     content: "We are here to help your eyes shine and your style flourish.",
   },
   {
-    image: "/images/3.webp",
+    image: "/images/4.png",
+    mobileImage: "/images/banner6.png", // Add mobile-specific image
     heading: "Mr.Optics",
     content:
       "This is the first line of content. This is the second line of content.",
   },
-  // Add more slides as needed
 ];
 
 const Carousel = () => {
@@ -44,17 +46,11 @@ const Carousel = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Handle form submission
-  // const handleFormSubmit = (event) => {
-  //   event.preventDefault();
-  //   // Add your form submission logic here
-  //   setIsModalOpen(false); // Close the modal after submission
-  // };
   const onSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
 
-    formData.append("access_key", "0e841ebf-1176-4dcb-91db-948cf6ce89c5");
+    formData.append("access_key", "dc72e27f-92ec-4ed0-a3a5-57fd61f0a352");
 
     const object = Object.fromEntries(formData);
     const json = JSON.stringify(object);
@@ -72,7 +68,7 @@ const Carousel = () => {
     if (res.success) {
       Swal.fire({
         title: "Good job!",
-        text: "You clicked the button!",
+        text: "We Will Contact You Soon!",
         icon: "success",
       });
     }
@@ -93,10 +89,12 @@ const Carousel = () => {
               <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
-                  backgroundImage: `url(${item.image})`,
+                  backgroundImage: `url(${
+                    window.innerWidth < 768 ? item.mobileImage : item.image
+                  })`, // Check screen size
                 }}
               >
-                <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+                <div className="absolute inset-0 bg-black bg-opacity-10"></div>
               </div>
 
               {/* Text content */}
@@ -114,12 +112,12 @@ const Carousel = () => {
                 {/* Updated Buttons */}
                 <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
                   <button
-                    className="px-6 py-3 bg-violet-600 text-white font-semibold rounded-md hover:bg-violet-700 transition duration-300 flex items-center justify-center shadow-md"
+                    className="px-6 py-3 bg-violet-600 text-white font-semibold rounded-md hover:bg-violet-700 transition duration-300 flex items-center justify-center"
                     onClick={() => setIsModalOpen(true)} // Open modal
                   >
                     Book a free consulting call
                   </button>
-                  <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition duration-300 flex items-center justify-center shadow-md">
+                  <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition duration-300 flex items-center justify-center">
                     <FaPhone className="mr-2" />
                     <a href="tel:+919347735047"> Contact Us</a>
                   </button>
@@ -199,6 +197,35 @@ const Carousel = () => {
                 <div className="mb-4">
                   <label
                     className="block text-sm font-medium mb-2"
+                    htmlFor="number"
+                  >
+                    Mobile Number
+                  </label>
+                  <input
+                    type="text"
+                    id="number"
+                    name="number"
+                    className="w-full border rounded-md p-2"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    className="block text-sm font-medium mb-2"
+                    htmlFor="clgname"
+                  >
+                    School/Collage Name
+                  </label>
+                  <input
+                    type="text"
+                    id="clgname"
+                    name="clgname"
+                    className="w-full border rounded-md p-2"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    className="block text-sm font-medium mb-2"
                     htmlFor="message"
                   >
                     Message
@@ -208,7 +235,6 @@ const Carousel = () => {
                     name="message"
                     className="w-full border rounded-md p-2"
                     rows="4"
-                    required
                   ></textarea>
                 </div>
                 <div className="flex justify-end">

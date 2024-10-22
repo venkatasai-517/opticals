@@ -1,0 +1,24 @@
+/* General styles for carousel */
+.custom-carousel-image {
+  height: 50vh; /* Default height */
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  /* Styles for mobile view */
+  .custom-carousel-image {
+    height: 70vh; /* Increase the height on mobile view */
+  }
+}
+
+@media (max-width: 576px) {
+  /* Extra small devices */
+  .custom-carousel-image {
+    height: 15vh;
+    padding: 10px; /* Further increase the height for smaller devices */
+  }
+}
+/* carouselStyles.css */
+/* carouselStyles.css */
+
+/* Default button style (desktop view) */

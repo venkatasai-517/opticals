@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 const About = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -6,7 +7,33 @@ const About = () => {
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
 
+    formData.append("access_key", "dc72e27f-92ec-4ed0-a3a5-57fd61f0a352");
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+    setIsModalOpen(false); // Close the modal after submission
+
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: json,
+    }).then((res) => res.json());
+
+    if (res.success) {
+      Swal.fire({
+        title: "Good job!",
+        text: "We Will Contact You Soon!",
+        icon: "success",
+      });
+    }
+  };
   return (
     <section id="aboutus">
       <div className="grid w-11/12 m-auto mt-4 p md:grid-cols-2 md:gap-4">
@@ -36,50 +63,93 @@ const About = () => {
                 <h3 className="text-lg font-semibold text-gray-700 mb-4">
                   About Us
                 </h3>
-                <form>
+                <form onSubmit={onSubmit}>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label
+                      className="block text-sm font-medium mb-2"
+                      htmlFor="name"
+                    >
                       Name
                     </label>
                     <input
                       type="text"
+                      id="name"
+                      name="name"
+                      className="w-full border rounded-md p-2"
                       required
-                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 p-2"
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label
+                      className="block text-sm font-medium mb-2"
+                      htmlFor="email"
+                    >
                       Email
                     </label>
                     <input
                       type="email"
+                      id="email"
+                      name="email"
+                      className="w-full border rounded-md p-2"
                       required
-                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 p-2"
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label
+                      className="block text-sm font-medium mb-2"
+                      htmlFor="number"
+                    >
+                      Mobile Number
+                    </label>
+                    <input
+                      type="text"
+                      id="number"
+                      name="number"
+                      className="w-full border rounded-md p-2"
+                      required
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      className="block text-sm font-medium mb-2"
+                      htmlFor="clgname"
+                    >
+                      School/Collage Name
+                    </label>
+                    <input
+                      type="text"
+                      id="clgname"
+                      name="clgname"
+                      className="w-full border rounded-md p-2"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      className="block text-sm font-medium mb-2"
+                      htmlFor="message"
+                    >
                       Message
                     </label>
                     <textarea
-                      required
-                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 p-2"
+                      id="message"
+                      name="message"
+                      className="w-full border rounded-md p-2"
                       rows="4"
                     ></textarea>
                   </div>
                   <div className="flex justify-end">
                     <button
-                      type="button"
-                      onClick={toggleModal}
-                      className="bg-red-500 text-white rounded-md px-4 py-2 mr-2"
+                      type="submit"
+                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
                     >
-                      Cancel
+                      Send Message
                     </button>
                     <button
-                      type="submit"
-                      className="bg-blue-600 text-white rounded-md px-4 py-2"
+                      type="button"
+                      className="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition duration-300"
+                      onClick={() => setIsModalOpen(false)} // Close modal
                     >
-                      Submit
+                      Cancel
                     </button>
                   </div>
                 </form>

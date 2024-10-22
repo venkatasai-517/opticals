@@ -1,10 +1,38 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 const CustomAppSection = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleModalToggle = () => {
     setModalOpen((prev) => !prev);
+  };
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+
+    formData.append("access_key", "dc72e27f-92ec-4ed0-a3a5-57fd61f0a352");
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+    setModalOpen(false); // Close the modal after submission
+
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: json,
+    }).then((res) => res.json());
+
+    if (res.success) {
+      Swal.fire({
+        title: "Good job!",
+        text: "We Will Contact You Soon!",
+        icon: "success",
+      });
+    }
   };
 
   return (
@@ -49,51 +77,91 @@ const CustomAppSection = () => {
         <div className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg p-6 w-11/12 max-w-md">
             <h3 className="text-lg font-bold mb-4">Contact Us</h3>
-            <form>
+            <form onSubmit={onSubmit}>
               <div className="mb-4">
-                <label className="block mb-1" htmlFor="name">
+                <label
+                  className="block text-sm font-medium mb-2"
+                  htmlFor="name"
+                >
                   Name
                 </label>
                 <input
                   type="text"
                   id="name"
-                  className="border border-gray-300 p-2 w-full rounded"
+                  name="name"
+                  className="w-full border rounded-md p-2"
                   required
                 />
               </div>
               <div className="mb-4">
-                <label className="block mb-1" htmlFor="email">
+                <label
+                  className="block text-sm font-medium mb-2"
+                  htmlFor="email"
+                >
                   Email
                 </label>
                 <input
                   type="email"
                   id="email"
-                  className="border border-gray-300 p-2 w-full rounded"
+                  name="email"
+                  className="w-full border rounded-md p-2"
                   required
                 />
               </div>
               <div className="mb-4">
-                <label className="block mb-1" htmlFor="message">
+                <label
+                  className="block text-sm font-medium mb-2"
+                  htmlFor="number"
+                >
+                  Mobile Number
+                </label>
+                <input
+                  type="text"
+                  id="number"
+                  name="number"
+                  className="w-full border rounded-md p-2"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  className="block text-sm font-medium mb-2"
+                  htmlFor="clgname"
+                >
+                  School/Collage Name
+                </label>
+                <input
+                  type="text"
+                  id="clgname"
+                  name="clgname"
+                  className="w-full border rounded-md p-2"
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  className="block text-sm font-medium mb-2"
+                  htmlFor="message"
+                >
                   Message
                 </label>
                 <textarea
                   id="message"
-                  className="border border-gray-300 p-2 w-full rounded"
+                  name="message"
+                  className="w-full border rounded-md p-2"
                   rows="4"
-                  required
                 ></textarea>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="bg-green-600 text-white font-bold py-2 px-4 rounded hover:bg-green-700 transition duration-300"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
                 >
-                  Submit
+                  Send Message
                 </button>
                 <button
                   type="button"
-                  onClick={handleModalToggle}
-                  className="text-gray-500 underline"
+                  className="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition duration-300"
+                  onClick={() => setModalOpen(false)} // Close modal
                 >
                   Cancel
                 </button>
