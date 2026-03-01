@@ -76,9 +76,9 @@ const Carousel = () => {
 
   return (
     <section id="home">
-      <div className="relative w-full">
+      <div className="relative w-full p-3">
         {/* Carousel Wrapper */}
-        <div className="relative h-[60vh] md:h-[80vh] overflow-hidden">
+        <div className="relative h-[60vh] md:h-[80vh] overflow-hidden rounded-lg">
           {carouselContent.map((item, index) => (
             <div
               key={index}
@@ -179,7 +179,7 @@ const Carousel = () => {
                     required
                   />
                 </div>
-                <div className="mb-4">
+                {/* <div className="mb-4">
                   <label
                     className="block text-sm font-medium mb-2"
                     htmlFor="email"
@@ -193,7 +193,7 @@ const Carousel = () => {
                     className="w-full border rounded-md p-2"
                     required
                   />
-                </div>
+                </div> */}
                 <div className="mb-4">
                   <label
                     className="block text-sm font-medium mb-2"
@@ -242,7 +242,7 @@ const Carousel = () => {
                     type="submit"
                     className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
                   >
-                    Send Message
+                    Submit
                   </button>
                   <button
                     type="button"

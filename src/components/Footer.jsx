@@ -62,8 +62,8 @@ const Footer = () => {
               <a href="tel:+919347735047">
                 <p className="mb-1 text-sm">+91 9347735047</p>
               </a>
-              <a href="mailto:bvs@gmail.com">
-                <p className="mb-2 text-sm">bvs@gmail.com</p>
+              <a href="mailto:Mropticals24@gmail.com">
+                <p className="mb-2 text-sm">Mropticals24@gmail.com</p>
               </a>
               <h3 className="mb-2 text-lg font-semibold text-white">Connect</h3>
               <div className="flex space-x-2">

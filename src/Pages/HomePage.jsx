@@ -1,9 +1,9 @@
 import React from "react";
 import Carousel from "../components/home/Carousel";
 import About from "../components/home/About";
-import CustomAppSection from "../components/home/CustomAppSection";
-import FullStackCourseSection from "../components/home/FullStackCourseSection";
-import TechLogos from "../components/home/TechLogos";
+import ExploreOptics from "../components/home/ExploreOptics";
+import SpecialOffers from "../components/home/SpecialOffres";
+import OpticalLogos from "../components/home/OpticalLogos";
 import ReviewsSection from "../components/home/ReviewsSection";
 import ServicesWeOffer from "../components/home/ServicesWeOffer";
 import ProductScroll from "../components/home/Productscrolling";
@@ -22,9 +22,9 @@ const HomePage = () => {
         <ServicesWeOffer />
       </section>
 
-      <CustomAppSection />
-      <FullStackCourseSection />
-      <TechLogos />
+      <ExploreOptics />
+      <SpecialOffers />
+      <OpticalLogos />
 
       <ReviewsSection />
     </>

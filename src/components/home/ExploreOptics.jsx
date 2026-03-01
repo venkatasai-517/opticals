@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 
-const CustomAppSection = () => {
+const ExploreOptics = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleModalToggle = () => {
@@ -156,7 +156,7 @@ const CustomAppSection = () => {
                   type="submit"
                   className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
                 >
-                  Send Message
+                  Submit
                 </button>
                 <button
                   type="button"
@@ -174,4 +174,4 @@ const CustomAppSection = () => {
   );
 };
 
-export default CustomAppSection;
+export default ExploreOptics;
